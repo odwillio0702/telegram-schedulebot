@@ -51,3 +51,31 @@ def done(c):
 print("Бот запущен")
 start_scheduler(bot, data)
 bot.infinity_polling()
+
+@bot.callback_query_handler(func=lambda c: c.data in ["done", "delay10"])
+def callback(c):
+    uid = str(c.message.chat.id)
+    for r in data.get(uid, []):
+        if c.data == "done":
+            r["done"] = True
+            bot.edit_message_text(
+                "🎉 Отлично! До следующего раза",
+                c.message.chat.id,
+                c.message.message_id
+            )
+        elif c.data == "delay10":
+            r["delayed"] = True
+            bot.edit_message_text(
+                "⏰ Напоминание отложено на 10 минут",
+                c.message.chat.id,
+                c.message.message_id
+            )
+            def delayed_send():
+                time.sleep(600)
+                r["delayed"] = False
+                if not r["done"]:
+                    send(bot, c.message.chat.id, r)
+            threading.Thread(target=delayed_send).start()
+
+    save(data)
+
