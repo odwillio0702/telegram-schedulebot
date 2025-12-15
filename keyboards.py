@@ -6,7 +6,7 @@ def done_keyboard():
     kb.add(types.InlineKeyboardButton("✅ Я сделал", callback_data="done"))
     return kb
 
-# Кнопки "Я сделал" + "Отложить 10 минут"
+# Кнопки "Я сделал" + "Отложить на 10 минут"
 def done_delay_keyboard():
     kb = types.InlineKeyboardMarkup(row_width=2)
     kb.add(
