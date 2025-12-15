@@ -2,6 +2,7 @@ import os
 import telebot
 import threading
 import time
+from datetime import datetime, timedelta
 from storage import load, save
 from keyboards import done_delay_keyboard
 
@@ -18,18 +19,25 @@ temp = {}
 # =======================
 @bot.message_handler(commands=['start'])
 def start(m):
-    bot.send_message(m.chat.id, "📝 О чём мне напоминать?")
+    bot.send_message(
+        m.chat.id,
+        "📝 О чём мне напоминать?"
+    )
     temp[m.chat.id] = {}
     bot.register_next_step_handler(m, get_text)
 
 def get_text(m):
     temp[m.chat.id]["text"] = m.text
-    bot.send_message(m.chat.id, "⏰ Время? (HH:MM)")
+    bot.send_message(m.chat.id, "⏰ Время? (HH:MM, 24h)")
     bot.register_next_step_handler(m, get_time)
 
 def get_time(m):
     temp[m.chat.id]["time"] = m.text
-    bot.send_message(m.chat.id, "📅 Дни? (Mon,Tue,Wed)")
+    bot.send_message(
+        m.chat.id,
+        "📅 Дни? (Mon,Tue,Wed,Thu,Fri,Sat,Sun, разделяй запятой)\n"
+        "Пример: Mon,Wed,Fri или Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+    )
     bot.register_next_step_handler(m, get_days)
 
 def get_days(m):
@@ -37,13 +45,13 @@ def get_days(m):
     reminder = {
         "text": temp[m.chat.id]["text"],
         "time": temp[m.chat.id]["time"],
-        "days": m.text.split(","),
+        "days": [d.strip() for d in m.text.split(",")],
         "done": False,
         "delayed": False
     }
     data.setdefault(uid, []).append(reminder)
     save(data)
-    bot.send_message(m.chat.id, "✅ Напоминание сохранено")
+    bot.send_message(m.chat.id, "✅ Напоминание сохранено с кнопками")
 
 # =======================
 # Callback кнопок
@@ -81,7 +89,7 @@ def send(bot, uid, reminder):
     bot.send_message(
         uid,
         f"⏰ Напоминание:\n\n{reminder['text']}",
-        reply_markup=done_delay_keyboard()  # Обязательно InlineKeyboardMarkup
+        reply_markup=done_delay_keyboard()
     )
 
     def repeat():
@@ -92,22 +100,35 @@ def send(bot, uid, reminder):
     threading.Thread(target=repeat).start()
 
 # =======================
-# Шедулер проверяет время
+# Шедулер проверяет время и день
 # =======================
 def start_scheduler():
     def loop():
         while True:
-            from datetime import datetime
-            now = datetime.now().strftime("%H:%M")
-            weekday = datetime.now().strftime("%A")
+            now = datetime.now()
+            weekday_full = now.strftime("%A")  # полное имя дня
+            weekday_map = {
+                "Monday": "Mon", "Tuesday": "Tue", "Wednesday": "Wed",
+                "Thursday": "Thu", "Friday": "Fri", "Saturday": "Sat", "Sunday": "Sun"
+            }
+            today = weekday_map[weekday_full]
+
             for uid, reminders in data.items():
                 for r in reminders:
-                    if r["time"] == now and weekday in r["days"] and not r["done"]:
+                    # вычисляем datetime напоминания на сегодня
+                    try:
+                        h, m = map(int, r["time"].split(":"))
+                        reminder_time = now.replace(hour=h, minute=m, second=0, microsecond=0)
+                    except:
+                        continue  # пропускаем если время некорректно
+
+                    if now >= reminder_time and today in r["days"] and not r["done"] and not r.get("delayed", False):
                         send(bot, int(uid), r)
-            time.sleep(60)
+            time.sleep(10)  # проверяем каждые 10 секунд
+
     threading.Thread(target=loop, daemon=True).start()
 
 start_scheduler()
 
-print("Бот запущен с кнопками")
+print("Бот запущен с кнопками и поддержкой дней недели")
 bot.infinity_polling()
