@@ -1,19 +1,23 @@
+import os
 import telebot
+import threading
+import time
 from storage import load, save
 from scheduler import start_scheduler
-
-import os
+from keyboards import done_delay_keyboard
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+if not BOT_TOKEN:
+    raise Exception("Bot token is not defined")
 
 bot = telebot.TeleBot(BOT_TOKEN)
-
 data = load()
 temp = {}
 
+# Старт / создание напоминания
 @bot.message_handler(commands=['start'])
 def start(m):
-    bot.send_message(m.chat.id, "📝 Напиши текст напоминания")
+    bot.send_message(m.chat.id, "📝 О чём мне напоминать?")
     temp[m.chat.id] = {}
     bot.register_next_step_handler(m, get_text)
 
@@ -33,25 +37,14 @@ def get_days(m):
         "text": temp[m.chat.id]["text"],
         "time": temp[m.chat.id]["time"],
         "days": m.text.split(","),
-        "done": False
+        "done": False,
+        "delayed": False
     }
     data.setdefault(uid, []).append(reminder)
     save(data)
     bot.send_message(m.chat.id, "✅ Напоминание сохранено")
 
-@bot.callback_query_handler(func=lambda c: c.data == "done")
-def done(c):
-    for r in data.get(str(c.message.chat.id), []):
-        r["done"] = True
-    save(data)
-    bot.edit_message_text("🎉 Отлично! До следующего раза",
-                          c.message.chat.id,
-                          c.message.message_id)
-
-print("Бот запущен")
-start_scheduler(bot, data)
-bot.infinity_polling()
-
+# Обработчик кнопок
 @bot.callback_query_handler(func=lambda c: c.data in ["done", "delay10"])
 def callback(c):
     uid = str(c.message.chat.id)
@@ -76,6 +69,25 @@ def callback(c):
                 if not r["done"]:
                     send(bot, c.message.chat.id, r)
             threading.Thread(target=delayed_send).start()
-
     save(data)
 
+# Функция отправки напоминания
+def send(bot, uid, reminder):
+    bot.send_message(
+        uid,
+        f"⏰ Напоминание:\n\n{reminder['text']}",
+        reply_markup=done_delay_keyboard()
+    )
+
+    def repeat():
+        time.sleep(600)
+        if not reminder["done"] and not reminder.get("delayed", False):
+            send(bot, uid, reminder)
+
+    threading.Thread(target=repeat).start()
+
+# Запуск шедулера
+start_scheduler(bot, data, send)
+
+print("Бот запущен")
+bot.infinity_polling()
