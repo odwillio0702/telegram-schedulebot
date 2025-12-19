@@ -8,27 +8,28 @@
 </head>
 <body>
 
+<div class="bg"></div>
+
 <div class="card">
     <h1>⏰ Напоминание</h1>
 
     <form id="reminderForm">
         <input id="text" placeholder="Что нужно сделать?" required>
-
         <input id="time" type="time" required>
 
-        <input id="days" placeholder="mon,tue,wed" readonly>
+        <input id="days" placeholder="Выбранные дни" readonly>
 
         <div class="days-grid">
-            <button type="button" class="day" data-day="mon">Пн</button>
-            <button type="button" class="day" data-day="tue">Вт</button>
-            <button type="button" class="day" data-day="wed">Ср</button>
-            <button type="button" class="day" data-day="thu">Чт</button>
-            <button type="button" class="day" data-day="fri">Пт</button>
-            <button type="button" class="day" data-day="sat">Сб</button>
-            <button type="button" class="day" data-day="sun">Вс</button>
+            <button type="button" data-day="mon">Пн</button>
+            <button type="button" data-day="tue">Вт</button>
+            <button type="button" data-day="wed">Ср</button>
+            <button type="button" data-day="thu">Чт</button>
+            <button type="button" data-day="fri">Пт</button>
+            <button type="button" data-day="sat">Сб</button>
+            <button type="button" data-day="sun">Вс</button>
         </div>
 
-        <div class="quick-buttons">
+        <div class="quick">
             <button type="button" id="weekdays">Будни</button>
             <button type="button" id="alldays">Каждый день</button>
         </div>
