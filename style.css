@@ -1,65 +1,85 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  padding: 40px 15px;
-  font-family: Arial, sans-serif;
-  background: url("https://i.imgur.com/czp4xql.jpeg") no-repeat center center fixed;
-  background-size: cover;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://i.imgur.com/czp4xql.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    overflow-x: hidden;
 }
 
-/* Карточки */
+.fog {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
 .card {
-  width: 100%;
-  max-width: 380px;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px 0;
-  text-align: center;
+    padding: 20px;
+    border-radius: 25px;
+    background: rgba(0,0,0,0.4);
+    margin-bottom: 25px;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
 }
 
-/* Профиль */
-.profile-photo {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.4);
-}
-
-/* Ссылки */
-a {
-  display: block;
-  color: #00ffff;
-  text-decoration: none;
-  margin: 8px 0;
-}
-
-/* Фото */
-.info-photo {
-  width: 100%;
-  border-radius: 15px;
-  margin-bottom: 10px;
-}
-
-/* Fade-in */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fade 1.2s forwards;
-}
-
-@keyframes fade {
-  to {
+.card.fade-in-visible {
     opacity: 1;
     transform: translateY(0);
-  }
+}
+
+.profile-pic {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.info-photo {
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+
+.links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.links-container a {
+    text-decoration: none;
+    color: #7f5cff;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+}
+
+.card p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
 }
