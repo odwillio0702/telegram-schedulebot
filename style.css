@@ -1,121 +1,112 @@
+/* Основные стили */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-image: url('https://i.imgur.com/czp4xql.jpeg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    padding-top: 30px;
-    overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url('https://i.imgur.com/czp4xql.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
 }
 
-.fog {
+/* ---------- Простая горизонтальная гирлянда ---------- */
+.simple-garland {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(6px);
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
     pointer-events: none;
-    z-index: 0;
+    z-index: 10;
 }
 
-.container {
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
+.simple-garland .light {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--color, #ff0);
+    box-shadow: 0 0 15px var(--color, #ff0);
+    animation: blink 1.5s infinite alternate;
+}
+
+@keyframes blink {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0.3; transform: scale(0.8); }
+}
+
+/* ---------- Профиль ---------- */
+.profile-card {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.5);
+}
+
+/* ---------- Инфо-блоки ---------- */
+.info-blocks {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 50px 0;
+}
+
+.info-block {
+  background: rgba(0,0,0,0.5);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.info-block a {
+  display: block;
+  margin: 5px 0;
+  color: #00ffff;
+  text-decoration: none;
+}
+
+/* ---------- Фото-блоки ---------- */
+.photo-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 50px;
 }
 
 .card {
-    padding: 20px;
-    border-radius: 25px;
-    background: rgba(0,0,0,0.4);
-    margin-bottom: 25px;
-    color: #fff;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
+  background: rgba(0,0,0,0.5);
+  border-radius: 15px;
+  padding: 10px;
+  text-align: center;
 }
 
-.card.fade-in-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.profile-pic {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    object-fit: cover;
-}
-
-.info-photo {
-    width: 100%;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    object-fit: cover;
-}
-
-.links-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-}
-
-.links-container a {
-    text-decoration: none;
-    color: #7f5cff;
-    font-weight: bold;
-    padding: 8px 16px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.1);
+.card img {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .card p {
-    margin: 8px 0 0 0;
-    font-size: 16px;
+  margin-top: 10px;
+  font-size: 18px;
 }
 
-/* ---------- Дополнения ---------- */
-
-/* плавная прокрутка */
-body {
-    scroll-behavior: smooth;
+/* ---------- Анимации ---------- */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+  animation-delay: 0.5s;
 }
 
-/* hover эффекты: glow и небольшое увеличение */
-.card {
-    transition: all 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.card:hover {
-    box-shadow: 0 0 20px rgba(127, 92, 255, 0.7);
-    transform: translateY(-5px) scale(1.02);
-}
-
-/* ссылки соцсетей при hover */
-.links-container a {
-    transition: all 0.3s ease;
-}
-
-.links-container a:hover {
-    background: rgba(127, 92, 255, 0.3);
-    transform: scale(1.05);
-}
-
-/* партиклы / туман */
-.particles {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
