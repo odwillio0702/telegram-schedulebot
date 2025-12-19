@@ -3,35 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<title>Напоминалка</title>
+<title>Мое приложение</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 
-<div class="card">
-    <h2>⏰ Создать напоминание</h2>
+<div class="container">
 
-    <input id="text" placeholder="Что сделать?">
-    <input id="time" type="time">
-    <input id="days" placeholder="mon,tue,wed" readonly>
-
-    <div class="days-grid">
-        <div class="day" data-day="mon">Пн</div>
-        <div class="day" data-day="tue">Вт</div>
-        <div class="day" data-day="wed">Ср</div>
-        <div class="day" data-day="thu">Чт</div>
-        <div class="day" data-day="fri">Пт</div>
-        <div class="day" data-day="sat">Сб</div>
-        <div class="day" data-day="sun">Вс</div>
+    <!-- Навигация -->
+    <div class="navbar">
+        <button class="nav-btn" data-page="info">Личная инфа</button>
+        <button class="nav-btn" data-page="social">Соцсети</button>
+        <button class="nav-btn" data-page="projects">Проекты</button>
     </div>
 
-    <div class="quick">
-        <div id="weekdays">Будни</div>
-        <div id="alldays">Каждый день</div>
-    </div>
+    <!-- Страницы -->
+    <div class="pages">
 
-    <button id="submit">Создать</button>
+        <div class="page" id="info">
+            <div class="card">
+                <img src="photo_placeholder.jpg" alt="Фото" class="profile-pic">
+                <h2>Даня</h2>
+                <p>Возраст: 17</p>
+            </div>
+        </div>
+
+        <div class="page" id="social">
+            <div class="card">
+                <h2>Мои соцсети</h2>
+                <ul class="links-list">
+                    <li><a href="#" target="_blank">Instagram</a></li>
+                    <li><a href="#" target="_blank">Discord</a></li>
+                    <li><a href="#" target="_blank">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="page" id="projects">
+            <div class="card">
+                <h2>Мои проекты</h2>
+                <ul class="links-list">
+                    <li><a href="#" target="_blank">GitHub</a></li>
+                    <li><a href="#" target="_blank">Сайт проекта</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script src="script.js"></script>
