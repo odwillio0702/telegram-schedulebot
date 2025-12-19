@@ -119,65 +119,40 @@ body {
     pointer-events: none;
     z-index: 0;
 }
-.garland {
+/* ---------- Простая горизонтальная гирлянда ---------- */
+.simple-garland {
     position: fixed;
-    top: 0;
+    top: 20px;
     left: 50%;
-    width: 100%;
-    height: 200px;
     transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
     pointer-events: none;
     z-index: 10;
 }
 
-.garland .wire {
-    position: absolute;
-    top: 150px; /* высота центра дуги */
-    left: 50%;
-    width: 100%;
-    height: 0;
-    border-top: 3px solid #555;
-    border-radius: 50%;
-    transform: translateX(-50%);
-}
-
 /* лампочки */
-.light {
-    position: absolute;
-    width: 16px;
-    height: 16px;
+.simple-garland .light {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background-color: var(--color, #ff0);
-    box-shadow: 0 0 10px var(--color, #ff0);
-    animation: blink 1.5s infinite alternate, sway 3s ease-in-out infinite;
+    box-shadow: 0 0 15px var(--color, #ff0);
+    animation: blink 1.5s infinite alternate, sway 2s ease-in-out infinite;
 }
 
-/* координаты лампочек для правильного полукруга сверху */
-.light:nth-child(2)  { left: 0%;  top: 150px; }
-.light:nth-child(3)  { left: 7%;  top: 125px; }
-.light:nth-child(4)  { left: 14%; top: 100px; }
-.light:nth-child(5)  { left: 21%; top: 75px;  }
-.light:nth-child(6)  { left: 28%; top: 50px;  }
-.light:nth-child(7)  { left: 35%; top: 25px;  }
-.light:nth-child(8)  { left: 50%; top: 10px;  }
-.light:nth-child(9)  { left: 65%; top: 25px;  }
-.light:nth-child(10) { left: 72%; top: 50px;  }
-.light:nth-child(11) { left: 79%; top: 75px;  }
-.light:nth-child(12) { left: 86%; top: 100px; }
-.light:nth-child(13) { left: 93%; top: 125px; }
-.light:nth-child(14) { left: 100%; top: 150px; }
-.light:nth-child(15) { left: 7%; top: 150px; } /* можно скорректировать последний для симметрии */
-
+/* мигание лампочек */
 @keyframes blink {
-    0% { opacity: 0.2; transform: scale(0.8); }
+    0% { opacity: 0.3; transform: scale(0.8); }
     50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.2; transform: scale(0.8); }
+    100% { opacity: 0.3; transform: scale(0.8); }
 }
 
+/* лёгкое колебание */
 @keyframes sway {
-    0% { transform: translateX(0) translateY(0) rotate(0deg); }
-    25% { transform: translateX(1px) translateY(-1px) rotate(1deg); }
-    50% { transform: translateX(0) translateY(0) rotate(0deg); }
-    75% { transform: translateX(-1px) translateY(-1px) rotate(-1deg); }
-    100% { transform: translateX(0) translateY(0) rotate(0deg); }
+    0% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-2px) rotate(1deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(-2px) rotate(-1deg); }
+    100% { transform: translateY(0) rotate(0deg); }
 }
