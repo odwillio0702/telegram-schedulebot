@@ -33,7 +33,7 @@ body {
 }
 
 .card {
-    padding: 25px;
+    padding: 20px;
     border-radius: 25px;
     background: rgba(0,0,0,0.4);
     margin-bottom: 25px;
@@ -58,7 +58,7 @@ body {
 
 .info-photo {
     width: 100%;
-    border-radius: 15px;
+    border-radius: 20px;
     margin-bottom: 10px;
     object-fit: cover;
 }
@@ -77,4 +77,9 @@ body {
     padding: 8px 16px;
     border-radius: 12px;
     background: rgba(255,255,255,0.1);
+}
+
+.card p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
 }
