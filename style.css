@@ -1,112 +1,65 @@
-/* Основные стили */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-image: url('https://i.imgur.com/czp4xql.jpeg');
+  padding: 40px 15px;
+  font-family: Arial, sans-serif;
+  background: url("https://i.imgur.com/czp4xql.jpeg") no-repeat center center fixed;
   background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: #fff;
-}
-
-/* ---------- Простая горизонтальная гирлянда ---------- */
-.simple-garland {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.simple-garland .light {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: var(--color, #ff0);
-    box-shadow: 0 0 15px var(--color, #ff0);
-    animation: blink 1.5s infinite alternate;
-}
-
-@keyframes blink {
-    0% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.3; transform: scale(0.8); }
-}
-
-/* ---------- Профиль ---------- */
-.profile-card {
-  text-align: center;
-  margin-top: 100px;
-}
-
-.profile-photo {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.5);
-}
-
-/* ---------- Инфо-блоки ---------- */
-.info-blocks {
+  color: white;
   display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin: 50px 0;
+  flex-direction: column;
+  align-items: center;
 }
 
-.info-block {
-  background: rgba(0,0,0,0.5);
+/* Карточки */
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 20px;
-  border-radius: 15px;
+  margin: 20px 0;
   text-align: center;
 }
 
-.info-block a {
+/* Профиль */
+.profile-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255,255,255,0.4);
+}
+
+/* Ссылки */
+a {
   display: block;
-  margin: 5px 0;
   color: #00ffff;
   text-decoration: none;
+  margin: 8px 0;
 }
 
-/* ---------- Фото-блоки ---------- */
-.photo-blocks {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 50px;
-}
-
-.card {
-  background: rgba(0,0,0,0.5);
+/* Фото */
+.info-photo {
+  width: 100%;
   border-radius: 15px;
-  padding: 10px;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
-.card img {
-  width: 250px;
-  height: 250px;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.card p {
-  margin-top: 10px;
-  font-size: 18px;
-}
-
-/* ---------- Анимации ---------- */
+/* Fade-in */
 .fade-in {
   opacity: 0;
-  animation: fadeIn 2s forwards;
-  animation-delay: 0.5s;
+  transform: translateY(30px);
+  animation: fade 1.2s forwards;
 }
 
-@keyframes fadeIn {
-  to { opacity: 1; }
+@keyframes fade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
