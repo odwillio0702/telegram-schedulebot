@@ -9,7 +9,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 def start(message):
     keyboard = types.InlineKeyboardMarkup()
     # Кнопка для открытия Mini App
-    web_app = types.WebAppInfo(url="https://telegram-schedulebot.vercel.app/")
+    web_app = types.WebAppInfo(url="https://brilliant-licorice-c5ff84.netlify.app/")
     button = types.InlineKeyboardButton(text="Открыть приложение", web_app=web_app)
     keyboard.add(button)
     
