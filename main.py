@@ -23,7 +23,7 @@ def start(message):
         KeyboardButton(
             "👤 Открыть профиль",
             web_app=WebAppInfo(
-                url="https://odwillio0702.github.io/telegram-schedulebot/"
+                url="https://odwillio0702.github.io/personalinfo/"
             )
         )
     )
