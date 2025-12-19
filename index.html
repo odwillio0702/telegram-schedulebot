@@ -5,25 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mini App</title>
 <link rel="stylesheet" href="style.css">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-
-<canvas id="fogCanvas"></canvas>
 
 <div class="container">
 
   <!-- Профиль -->
-  <div class="card profile-card fade-in">
-      <img src="https://i.imgur.com/Atr1fNh.jpeg" alt="Фото" class="profile-pic" id="profilePic">
-      <h2 class="gradient-text typing-text" data-text="@odwillio"></h2>
+  <div class="card">
+      <img src="https://i.imgur.com/Atr1fNh.jpeg" alt="Фото" class="profile-pic">
+      <h2>@odwillio</h2>
       <p>???</p>
-      <button id="changePhotoBtn" class="change-btn">Изменить фото</button>
   </div>
 
   <!-- Соцсети -->
-  <div class="card fade-in">
-      <h2 class="gradient-text">Соцсети</h2>
+  <div class="card">
+      <h2>Соцсети</h2>
       <div class="links-container">
           <a href="https://www.tiktok.com/@odwillio" target="_blank">TikTok</a>
           <a href="!" target="_blank">Telegram</a>
@@ -34,15 +30,15 @@
   </div>
 
   <!-- Проекты -->
-  <div class="card fade-in">
-      <h2 class="gradient-text">Проекты</h2>
+  <div class="card">
+      <h2>Проекты</h2>
       <div class="links-container">
           <a href="#" target="_blank">Сайт проекта</a>
       </div>
   </div>
 
   <!-- Фото слайдер -->
-  <div class="card fade-in slider-card">
+  <div class="card slider-card">
       <div class="slider">
           <img src="https://i.imgur.com/9uTcwgl.jpeg" class="slide active">
           <img src="https://i.imgur.com/ZXtiu88.jpeg" class="slide">
@@ -54,23 +50,13 @@
       <button id="nextSlide" class="change-btn">▶</button>
   </div>
 
-  <!-- Новые блоки -->
-  <div class="card fade-in">
-      <p class="soon-text">soon soon soon soon soon</p>
-  </div>
-  <div class="card fade-in">
-      <p class="soon-text">soon soon soon soon soon</p>
-  </div>
-  <div class="card fade-in">
-      <p class="soon-text">soon soon soon soon soon</p>
-  </div>
-  <div class="card fade-in">
-      <p class="soon-text">soon soon soon soon soon</p>
-  </div>
+  <!-- Блоки soon -->
+  <div class="card"><p class="soon-text">soon soon soon soon soon</p></div>
+  <div class="card"><p class="soon-text">soon soon soon soon soon</p></div>
+  <div class="card"><p class="soon-text">soon soon soon soon soon</p></div>
+  <div class="card"><p class="soon-text">soon soon soon soon soon</p></div>
 
 </div>
-
-<input type="file" id="photoInput" style="display:none;" accept="image/*">
 
 <script src="script.js"></script>
 </body>
