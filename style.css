@@ -82,3 +82,21 @@ button:hover {
     form { width: 90%; padding: 15px; }
     h1 { font-size: 1.8rem; }
 }
+
+.days-btn {
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #5f2cff, #7b2cff);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.days-btn:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #7b2cff, #9a2cff);
+}
