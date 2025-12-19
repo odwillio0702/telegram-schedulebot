@@ -1,12 +1,16 @@
+import os
+from dotenv import load_dotenv
 import telebot
 from telebot.types import WebAppInfo, ReplyKeyboardMarkup, KeyboardButton
 
-# -------------------------------
-# ВАШИ ТОКЕНЫ
-BOT_TOKEN = "ВАШ_BOT_TOKEN"
-# -------------------------------
+# Загружаем .env
+load_dotenv()
+
+# Достаем токен
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 bot = telebot.TeleBot(BOT_TOKEN)
+# -------------------------------
 
 # -------------------------------
 # КОМАНДА /start
