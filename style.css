@@ -14,6 +14,7 @@ body {
     min-height: 100vh;
     padding-top: 30px;
     perspective: 1px; /* Parallax */
+    overflow-x: hidden;
 }
 
 .container {
@@ -24,7 +25,6 @@ body {
     z-index: 1;
 }
 
-/* Карточки */
 .card {
     padding: 25px;
     border-radius: 25px;
@@ -32,14 +32,18 @@ body {
     backdrop-filter: blur(12px);
     box-shadow: none;
     margin-bottom: 25px;
-    transition: transform 0.3s;
+    transition: transform 0.3s, opacity 0.6s;
+    opacity: 0;
+}
+
+.card.fade-in-visible {
+    opacity: 1;
 }
 
 .card:hover {
     transform: translateY(-5px);
 }
 
-/* Профиль */
 .profile-pic {
     width: 130px;
     height: 130px;
@@ -76,7 +80,6 @@ body {
     background: rgba(127,92,255,0.4);
 }
 
-/* Градиентный текст */
 .gradient-text {
     background: linear-gradient(90deg, #7f5cff, #ff79c6, #7f5cff);
     -webkit-background-clip: text;
@@ -90,7 +93,6 @@ body {
     100% {background-position:0% 50%;}
 }
 
-/* Ссылки */
 .links-container {
     display: flex;
     flex-wrap: wrap;
@@ -116,14 +118,41 @@ body {
     transform: scale(1.05);
 }
 
-/* Блоки soon */
 .soon-text {
     font-weight: bold;
     letter-spacing: 5px;
 }
 
-/* Снег */
-#snowCanvas {
+.slider-card {
+    position: relative;
+}
+
+.slider {
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.slide {
+    width: 100%;
+    display: none;
+    border-radius: 20px;
+}
+
+.slide.active {
+    display: block;
+}
+
+.typing-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%,50%,100% {opacity: 1;}
+    25%,75% {opacity: 0;}
+}
+
+#fogCanvas {
     position: fixed;
     top: 0;
     left: 0;
