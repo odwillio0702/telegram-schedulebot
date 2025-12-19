@@ -1,48 +1,79 @@
 const tg = window.Telegram.WebApp;
 tg.ready();
 
-const CHAT_ID = tg.initDataUnsafe.user.id;
-
-// 🔴 ВАЖНО: сюда вставь URL сервера (Railway / Render)
 const SERVER_URL = "https://telegram-schedulebot.vercel.app/";
 
 const form = document.getElementById("reminderForm");
 const output = document.getElementById("output");
+const daysInput = document.getElementById("days");
 
-form.addEventListener("submit", async (e) => {
+const selectedDays = new Set();
+
+document.querySelectorAll(".day").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const day = btn.dataset.day;
+
+        if (selectedDays.has(day)) {
+            selectedDays.delete(day);
+            btn.classList.remove("active");
+        } else {
+            selectedDays.add(day);
+            btn.classList.add("active");
+        }
+
+        daysInput.value = Array.from(selectedDays).join(",");
+        tg.HapticFeedback.impactOccurred("light");
+    });
+});
+
+document.getElementById("weekdays").onclick = () => {
+    selectDays(["mon","tue","wed","thu","fri"]);
+};
+
+document.getElementById("alldays").onclick = () => {
+    selectDays(["mon","tue","wed","thu","fri","sat","sun"]);
+};
+
+function selectDays(days) {
+    selectedDays.clear();
+    document.querySelectorAll(".day").forEach(b => b.classList.remove("active"));
+
+    days.forEach(d => {
+        selectedDays.add(d);
+        document.querySelector(`[data-day="${d}"]`).classList.add("active");
+    });
+
+    daysInput.value = days.join(",");
+}
+
+form.addEventListener("submit", async e => {
     e.preventDefault();
 
-    const text = document.getElementById("text").value;
-    const time = document.getElementById("time").value;
-    const days = document.getElementById("days").value;
-
-    try {
-        const res = await fetch(SERVER_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text,
-                time,
-                days
-            })
-        });
-
-        if (res.ok) {
-            output.innerText = "✅ Напоминание создано!";
-            tg.HapticFeedback.notificationOccurred("success");
-            form.reset();
-        } else {
-            output.innerText = "❌ Ошибка при создании";
-        }
-    } catch (err) {
-        output.innerText = "❌ Сервер недоступен";
+    if (!daysInput.value) {
+        output.innerText = "❌ Выбери дни";
+        return;
     }
-});
-const daysInput = document.getElementById("days");
-const weekdaysBtn = document.getElementById("weekdaysBtn");
 
-weekdaysBtn.addEventListener("click", () => {
-    daysInput.value = "mon,tue,wed,thu,fri";
-    tg.HapticFeedback.impactOccurred("light");
+    const data = {
+        chat_id: tg.initDataUnsafe.user.id,
+        text: document.getElementById("text").value,
+        time: document.getElementById("time").value,
+        days: daysInput.value
+    };
+
+    const res = await fetch(SERVER_URL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+        output.innerText = "✅ Напоминание создано";
+        form.reset();
+        selectedDays.clear();
+        document.querySelectorAll(".day").forEach(b => b.classList.remove("active"));
+        daysInput.value = "";
+    } else {
+        output.innerText = "❌ Ошибка";
+    }
 });
