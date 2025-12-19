@@ -119,18 +119,19 @@ body {
     pointer-events: none;
     z-index: 0;
 }
-/* ---------- Гирлянда ---------- */
+/* ---------- Полукруглая гирлянда ---------- */
 .garland {
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
+    height: 150px; /* высота полукруга */
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px 0;
+    justify-content: space-around;
+    align-items: flex-start;
     z-index: 5;
+    pointer-events: none;
 }
 
 .light {
@@ -141,10 +142,13 @@ body {
     box-shadow: 0 0 8px #ff0;
     animation: blink 1.5s infinite alternate;
     animation-delay: calc(var(--i) * 0.2s);
+    /* позиция по полукругу */
+    transform: translateY(calc(-50px * sin((var(--i) / 9) * 180deg)));
 }
 
+/* Мерцание лампочек */
 @keyframes blink {
-    0% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0.2; transform: scale(0.8); }
+    0% { opacity: 0.2; transform: scale(0.8) translateY(var(--y,0)); }
+    50% { opacity: 1; transform: scale(1.2) translateY(var(--y,0)); }
+    100% { opacity: 0.2; transform: scale(0.8) translateY(var(--y,0)); }
 }
