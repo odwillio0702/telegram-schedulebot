@@ -1,8 +1,6 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    width: 100vw;
     font-family: 'Arial', sans-serif;
     background-image: url('https://i.imgur.com/M8qR1yZ.jpeg');
     background-position: center;
@@ -10,36 +8,43 @@ body {
     background-size: cover;
     background-attachment: fixed;
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
+    width: 90%;
     max-width: 500px;
-    margin: auto;
+    text-align: center;
     position: relative;
-    z-index: 1; /* чтобы снег был позади кнопок */
+    z-index: 1;
 }
 
 .navbar {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: space-around;
+    margin-bottom: 25px;
 }
 
 .nav-btn {
     flex: 1;
     margin: 0 5px;
-    padding: 10px;
-    border-radius: 12px;
+    padding: 12px 0;
+    border-radius: 20px;
     border: none;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
     cursor: pointer;
-    transition: 0.3s;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    backdrop-filter: blur(8px);
 }
 
 .nav-btn:hover, .nav-btn.active {
     background: rgba(127, 92, 255, 0.8);
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .pages {
@@ -49,7 +54,7 @@ body {
 .page {
     display: none;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s;
 }
 
 .page.active {
@@ -58,34 +63,47 @@ body {
 }
 
 .card {
-    padding: 20px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    text-align: center;
-    margin-bottom: 20px;
+    padding: 25px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    margin-bottom: 25px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .profile-pic {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     margin-bottom: 15px;
+    border: 3px solid rgba(255,255,255,0.3);
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
 }
 
 .change-btn {
-    padding: 8px 15px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 15px;
     border: none;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.15);
     color: #fff;
     cursor: pointer;
+    font-weight: bold;
     transition: 0.3s;
 }
 
 .change-btn:hover {
     background: rgba(127, 92, 255, 0.8);
+    transform: scale(1.05);
 }
 
 .links-list {
@@ -94,17 +112,24 @@ body {
 }
 
 .links-list li {
-    margin: 10px 0;
+    margin: 12px 0;
 }
 
 .links-list a {
     text-decoration: none;
     color: #7f5cff;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 12px;
     transition: 0.3s;
+    display: inline-block;
+    backdrop-filter: blur(5px);
+    background: rgba(255,255,255,0.05);
 }
 
 .links-list a:hover {
-    color: #a86cff;
+    color: #fff;
+    background: rgba(127, 92, 255, 0.8);
 }
 
 /* Canvas для снега */
@@ -115,5 +140,5 @@ body {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 0; /* позади контейнера */
+    z-index: 0;
 }
