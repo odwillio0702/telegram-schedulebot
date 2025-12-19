@@ -5,6 +5,27 @@ import time
 from datetime import datetime
 import json
 
+@bot.message_handler(content_types=['web_app_data'])
+def web_app(message):
+    import json
+    data = json.loads(message.web_app_data.data)
+
+    text = data["text"]
+    time = data["time"]
+    days = data["days"]
+
+    # ЭТО ЖЕ ЧТО /schedule
+    save_reminder(
+        chat_id=message.chat.id,
+        text=text,
+        time=time,
+        days=days
+    )
+
+    bot.send_message(message.chat.id, "✅ Напоминание создано")
+    
+    
+    
 # -----------------------
 # Настройки
 # -----------------------
@@ -226,3 +247,4 @@ def start_scheduler():
 start_scheduler()
 print("Бот запущен! Используем команды /schedule, /list, /done <номер>, /delay <номер> <минут>, /delete <номер>, /edit <номер>")
 bot.infinity_polling()
+
