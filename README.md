@@ -1,2 +1,2 @@
-# telegram-schedulebot
-Telegram schedule bot
+# telegram mini app with personal data
+
