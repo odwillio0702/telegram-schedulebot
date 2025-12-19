@@ -11,32 +11,27 @@
 <div class="card">
     <h1>⏰ Напоминание</h1>
 
-    <form id="reminderForm">
-        <input id="text" placeholder="Что нужно сделать?" required>
-        <input id="time" type="time" required>
+    <input id="text" placeholder="Что нужно сделать?">
+    <input id="time" type="time">
+    <input id="days" placeholder="Дни" readonly>
 
-        <input id="days" placeholder="Выбранные дни" readonly>
+    <div class="days-grid">
+        <div class="day" data-day="mon">Пн</div>
+        <div class="day" data-day="tue">Вт</div>
+        <div class="day" data-day="wed">Ср</div>
+        <div class="day" data-day="thu">Чт</div>
+        <div class="day" data-day="fri">Пт</div>
+        <div class="day" data-day="sat">Сб</div>
+        <div class="day" data-day="sun">Вс</div>
+    </div>
 
-        <div class="days-grid">
-            <button type="button" class="day" data-day="mon">Пн</button>
-            <button type="button" class="day" data-day="tue">Вт</button>
-            <button type="button" class="day" data-day="wed">Ср</button>
-            <button type="button" class="day" data-day="thu">Чт</button>
-            <button type="button" class="day" data-day="fri">Пт</button>
-            <button type="button" class="day" data-day="sat">Сб</button>
-            <button type="button" class="day" data-day="sun">Вс</button>
-        </div>
+    <div class="quick">
+        <div id="weekdays">Будни</div>
+        <div id="alldays">Каждый день</div>
+    </div>
 
-        <div class="quick">
-            <button type="button" id="weekdays">Будни</button>
-            <button type="button" id="alldays">Каждый день</button>
-        </div>
-
-        <button class="submit">Создать</button>
-    </form>
-
+    <div id="submit">Создать</div>
     <div id="output"></div>
-</div>
 
 <script src="script.js"></script>
 </body>
