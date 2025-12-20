@@ -63,3 +63,9 @@ window.addEventListener('resize', ()=>{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+const colors = ['#ff0000','#00ff00','#0000ff','#ff7f00','#ff00ff','#00ffff','#ffff00','#ff1493','#7fff00','#00bfff','#ff4500','#8a2be2'];
+
+document.querySelectorAll('.lightrope li').forEach((li, i) => {
+  li.style.background = colors[i % colors.length];
+  li.style.boxShadow = `0 4px 10px ${colors[i % colors.length]}`;
+});
