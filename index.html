@@ -64,7 +64,12 @@
   </div>
 
 </div>
-
+<button id="openApp">Открыть профиль</button>
+<script>
+document.getElementById("openApp").addEventListener("click", () => {
+    Telegram.WebApp.open();
+});
+</script>
 <script src="script.js"></script>
 </body>
 </html>
