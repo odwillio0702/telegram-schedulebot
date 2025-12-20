@@ -27,7 +27,7 @@ def start(message):
             web_app=WebAppInfo(url=WEBAPP_URL)
         )
     )
-    bot.send_message(message.chat.id, "Привет! Жми кнопку ниже, чтобы открыть приложение 👇", reply_markup=markup)
+    bot.send_message(message.chat.id, "👇", reply_markup=markup)
 
 def check_init_data(init_data: str) -> bool:
     data = dict(parse_qsl(init_data, keep_blank_values=True))
