@@ -74,9 +74,21 @@ def handle_web_app(message):
 
 @bot.message_handler(content_types=['web_app_data'])
 def handle_webapp_data(message):
-    data = json.loads(message.web_app_data.data)
-    if data.get("action") == "log_user":
-        text = f"Пользователь открыл WebApp\nID: {data.get('id')}\nИмя: {data.get('first_name')} {data.get('last_name','')}\nUsername: @{data.get('username','')}\nВремя: {datetime.now()}"
-        bot.send_message(CHANNEL_ID, text)
+    import json
+    from datetime import datetime
 
-bot.infinity_polling()
+    try:
+        data = json.loads(message.web_app_data.data)
+        print("Received data:", data)  # <-- проверка в консоли
+
+        if data.get("action") == "log_user":
+            text = (
+                f"👤 Пользователь открыл WebApp\n"
+                f"ID: {data.get('id')}\n"
+                f"Имя: {data.get('first_name')} {data.get('last_name','')}\n"
+                f"Username: @{data.get('username','')}\n"
+                f"Время: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            )
+            bot.send_message(CHANNEL_ID, text)
+    except Exception as e:
+        print("Ошибка:", e)
