@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Flask, request
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
-from bot.config import BOT_TOKEN, CHANNEL_ID, WEBAPP_URL
+from config import BOT_TOKEN, CHANNEL_ID, WEBAPP_URL
 
 # ==============================
 # Flask
