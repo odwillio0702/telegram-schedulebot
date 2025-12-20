@@ -87,3 +87,11 @@ if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
 document.querySelectorAll(".admin-only").forEach(el => {
     el.style.display = isAdmin ? "block" : "none";
 });
+function saveProfile() {
+    if (!isAdmin) return;
+
+    tg.sendData(JSON.stringify({
+        action: "save_profile",
+        text: "updated"
+    }));
+}
