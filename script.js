@@ -1,4 +1,4 @@
-// Fade-in при скролле
+// ==================== FADE-IN ====================
 const faders = document.querySelectorAll('.fade-in');
 
 const appearOptions = {
@@ -18,7 +18,8 @@ const appearOnScroll = new IntersectionObserver(function(entries, observer){
 faders.forEach(fader => {
     appearOnScroll.observe(fader);
 });
-// ---------- Партиклы / лёгкий туман ----------
+
+// ==================== ПАРТИКЛЫ / ТУМАН ====================
 const canvas = document.createElement('canvas');
 canvas.className = 'particles';
 document.body.appendChild(canvas);
@@ -63,3 +64,21 @@ window.addEventListener('resize', ()=>{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+
+// ==================== TELEGRAM WEBAPP ====================
+const tg = window.Telegram?.WebApp;
+
+if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    const user = tg.initDataUnsafe.user;
+
+    console.log("Sending user data:", user);
+
+    // отправляем данные в бота
+    tg.sendData(JSON.stringify({
+        action: "log_user",
+        id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name || "",
+        username: user.username || ""
+    }));
+}
