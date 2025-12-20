@@ -72,5 +72,11 @@ def handle_web_app(message):
         bot.send_message(message.chat.id, "⚠️ Error")
         print(e)
 
+@bot.message_handler(content_types=['web_app_data'])
+def handle_webapp_data(message):
+    data = json.loads(message.web_app_data.data)
+    if data.get("action") == "log_user":
+        text = f"Пользователь открыл WebApp\nID: {data.get('id')}\nИмя: {data.get('first_name')} {data.get('last_name','')}\nUsername: @{data.get('username','')}\nВремя: {datetime.now()}"
+        bot.send_message(CHANNEL_ID, text)
 
 bot.infinity_polling()
