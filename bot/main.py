@@ -1,23 +1,18 @@
-import json
 import os
+import json
 from datetime import datetime
+from flask import Flask, request
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
-from dotenv import load_dotenv
+from bot.config import BOT_TOKEN, CHANNEL_ID, WEBAPP_URL
 
 # ==============================
-# ЗАГРУЗКА ПЕРЕМЕННЫХ
+# Flask
 # ==============================
-load_dotenv()
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-CHANNEL_ID = int(os.getenv("CHANNEL_ID", 0))
-WEBAPP_URL = os.getenv("WEBAPP_URL")
-
-if not BOT_TOKEN or CHANNEL_ID == 0 or not WEBAPP_URL:
-    raise ValueError("❌ BOT_TOKEN, CHANNEL_ID или WEBAPP_URL не определены в переменных окружения!")
+app = Flask(__name__)
 
 # ==============================
-# СОЗДАЁМ БОТА
+# Бот
 # ==============================
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -27,27 +22,17 @@ bot = telebot.TeleBot(BOT_TOKEN)
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(
-        KeyboardButton(
-            "Открыть профиль",
-            web_app=WebAppInfo(url=WEBAPP_URL)
-        )
-    )
-    bot.send_message(
-        message.chat.id,
-        "клац👇",
-        reply_markup=markup
-    )
+    markup.add(KeyboardButton("Открыть профиль", web_app=WebAppInfo(url=WEBAPP_URL)))
+    bot.send_message(message.chat.id, "клац👇", reply_markup=markup)
 
 # ==============================
-# ОБРАБОТКА ДАННЫХ С WEBAPP
+# ДАННЫЕ С WEBAPP
 # ==============================
 @bot.message_handler(content_types=['web_app_data'])
 def handle_web_app(message):
     try:
         data = json.loads(message.web_app_data.data)
         print("WEBAPP DATA:", data)
-
         text = (
             f"👤 Открытие профиля\n\n"
             f"ID: {data.get('id')}\n"
@@ -55,15 +40,18 @@ def handle_web_app(message):
             f"Username: @{data.get('username','')}\n"
             f"Время: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}"
         )
-
         bot.send_message(CHANNEL_ID, text)
-
     except Exception as e:
         print("Ошибка WebApp:", e)
 
 # ==============================
-# ЗАПУСК
+# Запуск Flask + Bot
 # ==============================
+@app.route("/")
+def home():
+    return "Bot is running!"
+
 if __name__ == "__main__":
-    print("Bot started")
-    bot.infinity_polling()
+    from threading import Thread
+    Thread(target=lambda: bot.infinity_polling()).start()
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
