@@ -4,10 +4,12 @@ import json
 from datetime import datetime
 from flask import Flask, request, jsonify
 import telebot
+from dotenv import load_dotenv
 
 # ==============================
 # Настройки бота
 # ==============================
+load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID", 0))
 WEBAPP_URL = os.getenv("WEBAPP_URL", "https://odwillio0702.github.io/personalinfo/")
@@ -86,4 +88,4 @@ threading.Thread(target=run_telebot).start()
 # Запуск Flask (для локалки, на Railway Gunicorn)
 # ==============================
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080))) ти
