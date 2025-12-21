@@ -5,7 +5,13 @@ from flask import Flask, request
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 from config import BOT_TOKEN, CHANNEL_ID, WEBAPP_URL
+from bot.database import init_db
+from bot.handlers import register_user, send_profile
 
+if __name__ == "__main__":
+    init_db()  # создаем таблицу если нет
+    print("Bot started")
+    bot.infinity_polling()
 # ==============================
 # Flask
 # ==============================
