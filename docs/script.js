@@ -63,3 +63,19 @@ window.addEventListener('resize', ()=>{
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
+const likeBtn = document.getElementById('like-btn');
+const viewsCount = document.getElementById('views-count');
+
+likeBtn.addEventListener('click', () => {
+    fetch('https://api.telegram.org/bot<BOT_TOKEN>/sendMessage', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            chat_id: <YOUR_CHANNEL_OR_USER_ID>,
+            text: "Пользователь поставил лайк!"
+        })
+    }).then(res => {
+        let current = parseInt(likeBtn.textContent.split(' ')[1]) || 0;
+        likeBtn.textContent = `👍 ${current + 1}`;
+    });
+});
