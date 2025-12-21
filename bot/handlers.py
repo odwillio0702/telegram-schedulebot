@@ -1,17 +1,8 @@
-from bot.database import add_user, update_views
+from .database import add_or_update_user, increment_views, add_like
 
-def register_user(user_data: dict):
-    """
-    Сохраняем или обновляем пользователя в базе данных
-    """
-    user_id = user_data.get("id")
-    first_name = user_data.get("first_name", "")
-    last_name = user_data.get("last_name", "")
-    username = user_data.get("username", "")
-    add_user(user_id, first_name, last_name, username)
+def register_user(data):
+    add_or_update_user(data)
+    increment_views(data['id'])
 
-def send_profile(user_id: int):
-    """
-    Возвращает данные профиля для веб-приложения
-    """
-    return update_views(user_id)
+def like_user(user_id):
+    add_like(user_id)
