@@ -3,28 +3,22 @@ import json
 from datetime import datetime
 from threading import Thread
 
-from flask import Flask
+from flask import Flask, request
 import telebot
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
 
-# ==============================
-# Абсолютные импорты из bot
-# ==============================
+# Импорты из пакета bot
 from bot.config import BOT_TOKEN, CHANNEL_ID, WEBAPP_URL
 from bot.database import init_db
 from bot.handlers import register_user, send_profile
 
 # ==============================
-# Создаём Flask
-# ==============================
-app = Flask(__name__)
-
-# ==============================
 # Инициализация базы данных
 # ==============================
-init_db()  # создаём таблицы, если их нет
+init_db()  # создаем таблицу если нет
 
 # ==============================
-# Создаём бота
+# Создаем бота
 # ==============================
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -33,17 +27,17 @@ bot = telebot.TeleBot(BOT_TOKEN)
 # ==============================
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup = ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(
-        telebot.types.KeyboardButton(
+        KeyboardButton(
             "Открыть профиль",
-            web_app=telebot.types.WebAppInfo(url=WEBAPP_URL)
+            web_app=WebAppInfo(url=WEBAPP_URL)
         )
     )
     bot.send_message(message.chat.id, "клац👇", reply_markup=markup)
 
 # ==============================
-# Обработка данных с WebApp
+# Данные с WebApp
 # ==============================
 @bot.message_handler(content_types=['web_app_data'])
 def handle_web_app(message):
@@ -58,24 +52,26 @@ def handle_web_app(message):
             f"Username: @{data.get('username','')}\n"
             f"Время: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}"
         )
+
         bot.send_message(CHANNEL_ID, text)
 
-        # Можно тут вызывать функции из handlers.py, например:
-        # register_user(data)
-        # send_profile(data)
+        # Здесь можно добавить обработку лайков/счетчиков через register_user/send_profile
+        register_user(data)
 
     except Exception as e:
         print("Ошибка WebApp:", e)
 
 # ==============================
-# Flask маршрут
+# Flask
 # ==============================
+app = Flask(__name__)
+
 @app.route("/")
 def home():
     return "Bot is running!"
 
 # ==============================
-# Запуск Flask и бота одновременно
+# Запуск бота и Flask одновременно
 # ==============================
 if __name__ == "__main__":
     print("Bot started")
