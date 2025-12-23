@@ -5,7 +5,8 @@ from threading import Thread
 from dotenv import load_dotenv
 import telebot
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, WebAppInfo
-
+from PIL import Image
+import io
 # ==============================
 # Загрузка переменных из .env
 # ==============================
